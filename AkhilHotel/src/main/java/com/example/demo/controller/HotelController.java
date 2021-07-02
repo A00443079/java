@@ -1,8 +1,14 @@
 package com.example.demo.controller;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.DB.DB;
+import com.example.demo.models.HotelsList;
 
 
 @RestController
@@ -30,9 +36,17 @@ public class HotelController
 			
 			//API CALL-1
 			@RequestMapping(value="/hotels", method=RequestMethod.GET, produces="application/json")
-			public String getListOfHotels()
+			public HotelsList getListOfHotels()
 			{
-				return("List Of Hotels");
+				HotelsList HL=null;
+				
+				try
+				{
+					HL=DB.getRecords("select * from hotel");
+				}
+				catch(Exception e) {}
+				
+				return(HL);
 			}
 			
 }
