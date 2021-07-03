@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.DB.DB;
+import com.example.demo.DB.PostDB;
+import com.example.demo.models.Guest;
 import com.example.demo.models.HotelsList;
 import com.example.demo.models.ReservationConfirmation;
 import com.example.demo.models.ReservationDetails;
@@ -58,21 +60,23 @@ public class HotelController
 			public Object reservationConfirmation(@RequestBody ReservationDetails rd)
 			{
 				
-				return(generateConfirmationNumber(rd));	
-			}
-			
-			public Object generateConfirmationNumber(ReservationDetails rd)
-			{
-				UUID uuid = UUID.randomUUID();
-		        String id = uuid.toString();
+				//checks in the database and creates a UNIQUE confirmation_number
+				String id = PostDB.generateConfirmationNumber();
+				
+				//status of insertion, true if success, false if failure
+				boolean status= PostDB.insertNewReservation(id, rd);
+				
+				//If insertion fails
+				if(!status)
+				{
+					id=id+"  ==>  insertion failed";
+				}
 				
 				ReservationConfirmation rc = new ReservationConfirmation();
 				rc.setConfirmation_number(id);
-				
 				return((Object)rc);
-				
-				
-				
 			}
+			
+		
 			
 }
