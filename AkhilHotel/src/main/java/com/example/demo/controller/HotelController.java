@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.DB.GetDB;
+import com.example.demo.DB.OtherDB;
 import com.example.demo.DB.PostDB;
 import com.example.demo.models.Guest;
 import com.example.demo.models.HotelsList;
@@ -75,6 +76,53 @@ public class HotelController
 				ReservationConfirmation rc = new ReservationConfirmation();
 				rc.setConfirmation_number(id);
 				return((Object)rc);
+			}
+			
+			
+			//Extra API one
+			@RequestMapping("/getListOfConfirmationNumbers")
+			public List<ReservationConfirmation> getListOfConfirmationNumbers()
+			{
+				String query = "select confirmation_number from reservation";
+				List<ReservationConfirmation> l = OtherDB.getIdList(query);
+				return(l);
+			}
+			
+			//Extra API two
+			@RequestMapping("/getReservationDetails")
+			public Object getReservationDetails()
+			{
+				String id="0f1a05d8-cafe-445f-a827-809e653ecc6c";
+				
+				
+				ReservationDetails rd = OtherDB.getRD(id);
+				
+				
+				
+				
+				//if no such confirmation_number exists
+				if(rd==null)
+					{
+						// Inline class definition
+						class MyObject extends Object
+						{
+							private String error;
+							public String getError() {
+								return error;
+							}
+							public void setError(String error) {
+								this.error = error;
+							}
+							
+						}
+						MyObject o= new MyObject();
+						o.setError("confirmation_number = "+id+"  DOES NOT EXIST !!!");
+						return((Object)o);
+					}
+				
+				
+				
+				return((Object)rd);
 			}
 			
 		
