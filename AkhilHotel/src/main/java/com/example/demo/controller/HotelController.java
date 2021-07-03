@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.DB.DB;
+import com.example.demo.DB.GetDB;
 import com.example.demo.DB.PostDB;
 import com.example.demo.models.Guest;
 import com.example.demo.models.HotelsList;
@@ -48,7 +48,7 @@ public class HotelController
 				
 				try
 				{
-					HL=DB.getRecords("select * from hotel");
+					HL=GetDB.getRecords("select * from hotel");
 				}
 				catch(Exception e) {}
 				

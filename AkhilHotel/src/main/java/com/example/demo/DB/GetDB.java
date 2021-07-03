@@ -15,7 +15,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import com.example.demo.models.Hotel;
 import com.example.demo.models.HotelsList;
  
-public class DB 
+public class GetDB 
 {
      
     private static final String driverClassName = "com.mysql.jdbc.Driver";
