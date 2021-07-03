@@ -7,6 +7,7 @@ import java.util.UUID;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.DB.GetDB;
@@ -88,17 +89,27 @@ public class HotelController
 				return(l);
 			}
 			
+			
+			
 			//Extra API two
-			@RequestMapping("/getReservationDetails")
-			public Object getReservationDetails()
+			//Annotation start
+			@RequestMapping(
+								value="/getReservationDetails", 
+								method=RequestMethod.GET,  
+								produces="application/json"
+							) //Annotation end
+			
+			//function definition start
+			public Object getReservationDetails(
+										@RequestParam(
+														value="id", 
+														required=false, 
+														defaultValue="00000000-0000-0000-0000-000000000000"
+													 ) String id
+											   ) //function definition end
 			{
-				String id="0f1a05d8-cafe-445f-a827-809e653ecc6c";
-				
 				
 				ReservationDetails rd = OtherDB.getRD(id);
-				
-				
-				
 				
 				//if no such confirmation_number exists
 				if(rd==null)
